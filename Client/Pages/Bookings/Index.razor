@@ -4,7 +4,12 @@
 @attribute [Authorize]
 
 <h3 class="card-title">Car Bookings</h3>
-
+<a href="/bookings/create" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Booking
+</a>
+<br />
+<br />
 @if (Bookings == null){
 	<div class="alert alert-info">Loading Bookings...</div>
 }
@@ -21,7 +26,7 @@ else
 				<th>Actions</th>
 			</tr>
 		</thead>
-	</table>
+
 	<tbody>
 		@foreach (var booking in Bookings)
 		{
@@ -45,6 +50,7 @@ else
 			</tr>
 		}
 	</tbody>
+	</table>
 }
 
 @code {
