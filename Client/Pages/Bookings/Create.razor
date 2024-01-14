@@ -17,9 +17,10 @@
 				<option value="">-- Select Vehicle --</option>
 				@if (Vehicles != null)
 				{
+
 					foreach (var vehicle in Vehicles)
 					{
-						<option value="@vehicle.Id">@vehicle</option>
+						<option value="@vehicle.MakeId" "@vehicle.ModelId" "@vehicle.Id">@vehicle.Make.Name @vehicle.Model.Name - @vehicle.LicensePlateNumber</option>
 					}
 				}
 			</InputSelect>
@@ -36,11 +37,31 @@
 				{
 					foreach (var customer in Customers)
 					{
-						<option value="@customer.Id">@customer</option>
+						<option value="@customer.Id">@customer.FirstName - @customer.DrivingLicense</option>
 					}
 				}
 			</InputSelect>
 			<ValidationMessage For="@(() => booking.Customer)" />
+		</div>
+	</div>
+
+	@if (booking.Id > 0)
+	{
+		<div class="form-group">
+			<label>Date In: </label>
+			<div>
+				<InputDate @bind-Value="@booking.DateIn" class="form-control" />
+				<ValidationMessage For="@(() => booking.DateIn)" />
+			</div>
+		</div>
+	}
+
+	<div class="form-group">
+		<label>Customer: </label>
+		<div>
+			<InputDate @bind-Value="booking.DateOut" class="form-control">
+			</InputDate>
+			<ValidationMessage For="@(() => booking.DateOut)" />
 		</div>
 	</div>
 
@@ -55,16 +76,17 @@
 
 	private async Task CreateBooking()
 	{
-		await _client.PostAsJsonAsync(Endpoints.CustomersEndpoint, booking);
+		await _client.PostAsJsonAsync(Endpoints.BookingsEndpoint, booking);
 		_navManager.NavigateTo("/booking/");
 	}
 
 	private IList<Vehicle>? Vehicles;
 	private IList<Customer>? Customers;
-
+	
 	protected async override Task OnInitializedAsync()
 	{
 		Vehicles = await _client.GetFromJsonAsync<List<Vehicle>>($"{Endpoints.VehiclesEndpoint}");
 		Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+
 	}
 }
