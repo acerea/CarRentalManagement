@@ -1,0 +1,105 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@vehicle" OnValidSubmit="OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="form-group">
+		<label>Make: </label>
+		<div>
+			<InputSelect @bind-Value="vehicle.MakeId" class="form-control">
+				<option value="">-- Select Make --</option>
+				@if (Makes != null)
+				{
+					foreach (var make in Makes)
+					{
+						<option value="@make.Id">@make.Name</option>
+					}
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => vehicle.MakeId)" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Model: </label>
+		<div>
+			<InputSelect @bind-Value="vehicle.ModelId" class="form-control">
+				<option value="">-- Select Model --</option>
+				@if (Models != null)
+				{
+					foreach (var model in Models)
+					{
+						<option value="@model.Id">@model.Name</option>
+					}
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => vehicle.ModelId)" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Color: </label>
+		<div>
+			<InputSelect @bind-Value="vehicle.ColorId" class="form-control">
+				<option value="">-- Select Color --</option>
+				@if (Colors != null)
+				{
+					foreach (var color in Colors)
+					{
+						<option value="@color.Id">@color.Name</option>
+					}
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => vehicle.ColorId)" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Year: </label>
+		<div>
+			<InputNumber @bind-Value="vehicle.Year" class="form-control" />
+			<ValidationMessage For="@(() => vehicle.Year)" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>License Plate Number: </label>
+		<div>
+			<InputText @bind-Value="vehicle.LicensePlateNumber" class="form-control" />
+			<ValidationMessage For="@(() => vehicle.LicensePlateNumber)" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Daily Rate: </label>
+		<div>
+			<InputNumber @bind-Value="vehicle.RentalRate" class="form-control" />
+			<ValidationMessage For="@(() => vehicle.RentalRate)" />
+		</div>
+	</div>
+
+	<br />
+	<button type="submit" class="btn btn-success btn-block">
+		@ButtonText
+	</button>
+	<BackToList Target="vehicles" />
+</EditForm>
+
+@code {
+	[Parameter] public Vehicle? vehicle { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	
+	private IList<Make>? Makes;
+	private IList<Model>? Models;
+	private IList<Color>? Colors;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Makes = await _client.GetFromJsonAsync<List<Make>>($"{Endpoints.MakesEndpoint}");
+		Models = await _client.GetFromJsonAsync<List<Model>>($"{Endpoints.ModelsEndpoint}");
+		Colors = await _client.GetFromJsonAsync<List<Color>>($"{Endpoints.ColorsEndpoint}");
+
+	}
+}
