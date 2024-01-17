@@ -6,6 +6,9 @@
 <hr />
 <br />
 
+<FormComponent ButtonText="Create Make" make="make" OnValidSubmit="@CreateMake" />
+
+@*
 <EditForm Model="@make" OnValidSubmit="CreateMake">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -22,7 +25,7 @@
 		Create Make
 	</button>
 </EditForm>
-
+*@
 @code {
 	Make make = new Make();
 

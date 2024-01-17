@@ -6,6 +6,9 @@
 <hr />
 <br />
 
+<FormComponent ButtonText="Create Model" model="model" OnValidSubmit="@CreateModel" />
+
+@*
 <EditForm Model="@model" OnValidSubmit="CreateModel">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -22,7 +25,7 @@
 		Create Model
 	</button>
 </EditForm>
-
+*@
 @code {
 	Model model = new Model();
 

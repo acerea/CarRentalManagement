@@ -6,6 +6,9 @@
 <hr />
 <br />
 
+<FormComponent ButtonText="Create Booking" booking="booking" OnValidSubmit="@CreateBooking" />
+
+@*
 <EditForm Model="@booking" OnValidSubmit="CreateBooking">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -69,6 +72,7 @@
 		Create Booking
 	</button>
 </EditForm>
+*@
 
 @code {
 	Booking booking = new Booking();

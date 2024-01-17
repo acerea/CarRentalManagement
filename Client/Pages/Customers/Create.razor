@@ -6,6 +6,9 @@
 <hr />
 <br />
 
+<FormComponent ButtonText="Create Customer" customer="customer" OnValidSubmit="@CreateCustomer" />
+
+@*
 <EditForm Model="@customer" OnValidSubmit="CreateCustomer">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -63,6 +66,7 @@
 		Create Customer
 	</button>
 </EditForm>
+*@
 
 @code {
 	Customer customer = new Customer();

@@ -6,6 +6,9 @@
 <hr />
 <br />
 
+<FormComponent ButtonText="Create Color" color="color" OnValidSubmit="@CreateColor" />
+
+@*
 <EditForm Model="@color" OnValidSubmit="CreateColor">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -22,6 +25,7 @@
 		Create Color
 	</button>
 </EditForm>
+*@
 
 @code {
 	Color color = new Color();
