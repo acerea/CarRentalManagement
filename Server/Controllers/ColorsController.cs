@@ -40,7 +40,8 @@ namespace CarRentalManagement.Server.Controllers
         */
 		public async Task<IActionResult> GetColors()
 		{
-			var Colors = await _unitOfWork.Colors.GetAll();
+            //return NotFound();
+            var Colors = await _unitOfWork.Colors.GetAll();
 			return Ok(Colors);
 		}
 		// GET: api/Colors/5

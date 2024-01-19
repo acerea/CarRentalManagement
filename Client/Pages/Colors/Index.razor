@@ -3,6 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+@inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+
 <h3 class="card-title">Car Colors</h3>
 <a href="/colors/create" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
@@ -50,6 +55,7 @@ else
 
 	protected async override Task OnInitializedAsync()
 	{
+		_interceptor.MonitorEvent();
 		Colors = await _client.GetFromJsonAsync<List<Color>>($"{Endpoints.ColorsEndpoint}");
 	}
 
@@ -66,5 +72,10 @@ else
 			}
 		}
 	}
-	
+
+	public void Dispose()
+	{
+		_interceptor.DisposeEvent();
+	}
+
 }
